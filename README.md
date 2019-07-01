@@ -89,7 +89,7 @@
 	// hiệu ứng phụ: nạp file vào
 	include "common.php";
 	```
-	>Trong file toàn bộ là hiệu ứng phụ vậy là ok rồi phải không nào các bạn
+	>Trong file toàn bộ là Side Effects vậy là ok rồi phải không nào các bạn
 #### 3.1.3. Namespace and Class Names
 - Namespace và Lớp PHẢI theo chuẩn “autoloading” PSR: [[PSR-0](https://www.php-fig.org/psr/psr-0/), [PSR-4](https://www.php-fig.org/psr/psr-4/)].
 - Có nghĩa là mỗi lớp được khai báo trên mỗi file PHP riêng và namespace tối thiểu có một cấp, cấp đầu là tên vendor.
