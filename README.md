@@ -66,7 +66,7 @@
 		// function body
 	}
 
-	// điều kiện không phải là hiệu ứng phụ nhé
+	// điều kiện không phải là Side Effects nhé
 	if (! function_exists('bar')) {
 		// khai báo hàm
 		function bar()
@@ -75,7 +75,7 @@
 		}
 	}
 	```
-   >Như vậy file php bị vi phạm nguyên tắc trên được sửa thành:
+   >Như vậy file PHP bị vi phạm nguyên tắc trên được sửa thành:
 	```
 	<?php
 	// hiệu ứng phụ: đổi thiết lập ini
@@ -263,6 +263,110 @@ Cụ thể chi tiết hơn thì các bạn xem link sau nhé: [PSR-2 Coding Styl
 	}
 	```
 >Các bạn hãy xem chi tiết tại đây nhé [link](https://www.php-fig.org/psr/psr-3/)
+# Optimize
+- Ở trên là tôi đã trình bài về syntax code. Phần này chúng ta sẽ đi tìm hiểu về cách optimize code như thể nào để code chúng ta sẽ cải thiện được performance.  Nhưng tôi xin nói trước cái gì cũng có cái giá của nó hết nhé, cái gì cũng có 2 mặt và "optimize code" cũng không phải ngoại lệ. Code được optimized quá nhiều thường sẽ khó đọc, khó sử dụng lại, khó bảo trì và khó debug. Vì vậy không phải lúc nào
+"optimize code" cũng tốt. Optimize code có tốt hay không ? có cần thiết hay không ? còn tùy thuộc vào từng trường hợp, từng ngữ cảnh cụ thể.
+
+- Bên dưới là những cái chúng ta nên tránh trong quá trình code, tôi chỉ giải thích ý nào khó hiểu thôi nhé.
+
+- [x] **Sắp xếp thứ tự các điều kiện trong câu lệnh "if".**
+- [x] **Nếu có thể hãy sử dụng "switch" thay vì một loạt các lệnh "if".**
+- [x] **Tối ưu phạm vi của biến.**
+- [x] **Sử dụng toán tử tăng/giảm một cách hợp lý.**
+- [x] **Nên sử dụng toán tử gán kết hợp toán tử số học thay vì sử dụng toán tử toán học và toán tử gán riêng biệt.**
+- [x] **Khi khởi tạo đối tượng, nên sử dụng hàm khởi tạo thay vì toán tử gán.**
+- [x] **Khi sử dụng strlen() nên kiểm tra biến đó có tồn tại hay không trước(isset()).**
+- [x] **Không được sử dụng count() trong vòng lập.**
+- [x] **Áp dụng quy tắc DRY, có nghĩa là không lập lại code 2 lần.**
+
+
+## Sắp xếp thứ tự các điều kiện trong câu lệnh "if".
+- Nếu xác xuất nhận giá trị true/false của các điều kiện con bên trong là tương đương nhau thì nên đặt các điều kiện đơn giản, có thời gian xử lý nhanh lên trước, đặt các điều kiện phức tạp, có thời gian xử lý lâu hơn ở phía sau.
+	```
+	if(classA.getValue() === 5 &&  ($b === 1) ) {
+		// làm gì bạn muốn
+	}
+	```
+	Nếu các bạn viết như thế này thì performance các bạn sẽ không tốt mặc dù các bạn không code sai. Và các bạn xem cách bênh dưới nhé.
+	```
+	if(($b === 1) && classA.getValue() === 5) {
+		// làm gì bạn muốn
+	}
+    ```
+   Tôi giải thích sơ qua nhé: Thời gian kiểm tra classA.getValue() === 5 luôn lớn hơn ```$b === 1```. Vì vậy các bạn đặt nó trước thì nếu classA.getValue() === false có phải "if" luôn false đúng không nào ? Vậy thời gian kiểm tra chỗ này có phải bằng với thời gian classA.getValue() thực thi kết không ? còn nếu các bạn đặt ```$b === 1``` thì lại khác nếu ```$b === 1``` là false thì "if" luôn false vậy thời gian thực thi ```$b === 1``` sẽ nhanh hơn ```classA.getValue() === 5``` đúng không nào ?
+
+- Nếu xác suất nhận giá trị true/false của các điều kiện con bên trong là chênh lệch nhau thì
+  - Với phép “AND”, ví dụ (A && B): Nên đặt điều kiện có xác suất nhận giá trị false nhiều hơn lên trước.
+  - Với phép “OR”, ví dụ (A || B): Nên đặt điều kiện có xác suất nhận giá trị true nhiều hơn lên trước
+## Nếu có thể hãy sử dụng "switch" thay vì một loạt các lệnh "if"
+- Câu lệnh switch sử dụng jump table để nhảy đến đoạn code cần thực hiện thay vì check từng điều kiện như một loạt các lệnh if. Chính vì vậy sử dụng lệnh switch sẽ giúp chương trình chạy nhanh hơn so với việc sử dụng nhiều lệnh if → Bất cứ khi nào có thể thay nhiều lệnh if bằng lệnh switch thì hãy sử dụng lệnh switch.
+	```
+	if($a ===1) {
+	// hành động
+	}else if($a === 2) {
+	// hành động
+	}else if($a === 3){
+	// hành động
+	}
+	```
+	Chuyển thành
+	```
+	swtich($a) {
+	  case 1:
+	    // hành động
+	    break;
+	  case 2:
+	    // hành động
+	    break;
+	  case 3:
+	    // hành động
+	    break;
+	  default:
+		break;
+	}
+	```
+## Tối ưu phạm vi của biến
+- Nếu biến là một đối tượng của một class và được sử dụng bên trong vòng lặp nhưng không bị thay đổi trong vòng lặp thì nên khai báo biến ngay trước vòng lặp. Điều này là để tránh việc hàm khởi tạo và hàm hủy của đối tượng được gọi liên tục một cách không cần thiết trong mỗi lần lặp.
+	```
+	for($i = 1; $i <=5; $i++) {
+	  classAclassA $objA;
+	  $objA.doSomething(i);
+	}
+	```
+	Chuyển thành
+	```
+	classAclassA $objA;
+	for($i = 1; $i <=5; $i++) {
+	  $objA.doSomething(i);
+	}
+	```
+- Trường hợp không liên quan đến vòng lặp và biến chỉ được sử dụng ở trong một phạm vi cục bộ nào đó thì nên khai báo biến trong phạm vi nhỏ nhất mà nó được sử dụng.
+    ```
+	classAclassA $objA;
+	if($a === 1) {
+		// hành động
+	}
+	```
+	Chuyển thành
+	```
+	if($a === 1) {
+		classAclassA $objA;
+		// hành động
+	}
+	```
+## Sử dụng toán tử tăng/giảm một cách hợp lý.
+- Khi sử dụng toán tử tăng/giảm ở dạng hậu tố thì khi chạy chương trình sẽ tạo ra đối tượng trung gian, do đó làm tăng thời gian xử lý (do phải gọi hàm copy constructor và hàm hủy), thời gian xử lý đó sẽ khá đáng kể với những biến là đối tượng của class. Vì vậy nên sử dụng toán tử tăng/giảm ở dạng tiền tố thay vì hậu tố trong trường hợp giá trị của biểu thức không được sử dụng.
+## Nên sử dụng toán tử gán kết hợp toán tử số học thay vì sử dụng toán tử toán học và toán tử gán riêng biệt.
+	```
+	$s1 = 'text1';
+    $s2 = $s1 + 'text2';
+	```
+	Chuyển thành
+	```
+	$s1 = 'text1';
+    $s2 = $s1;
+	$s2 += 'text 2';
+	```
 # Khái niệm review chéo:
 ### 1. Tại sao phải review chéo:
 - Dự án quá lớn với nhiều tính năng có độ phức tạp cao, mỗi developer chỉ có thể đảm nhận 1 tính năng đó.
