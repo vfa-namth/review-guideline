@@ -32,7 +32,8 @@
 - Tên phương thức của lớp PHẢI ở dạng camelCase (từ đầu viết thường, ví dụ: helloWorld).
 #### 3.1.2. Files
 #### 3.1.2.1. PHP Tags
-- Các file code PHẢI sử dụng thẻ <?php hoặc <?, nguyên tắc này khá đơn giản phải không nào, đầu file php phải bắt đầu bằng <?php nếu dùng short tag thì sẽ là <?= ?>;
+
+- Các file code PHẢI sử dụng thẻ ```<?php``` hoặc ```<?```, nguyên tắc này khá đơn giản phải không nào, đầu file php phải bắt đầu bằng ```<?php``` nếu dùng short tag thì sẽ là ```<?= ?>```;
 #### 3.1.2.2. Character Encoding
 - File code PHP sử dụng encode: UTF-8 without BOM
 #### 3.1.2.3. Side Effects
@@ -91,7 +92,7 @@
 	```
 	>Trong file toàn bộ là Side Effects vậy là ok rồi phải không nào các bạn
 #### 3.1.3. Namespace and Class Names
-- Namespace và Lớp PHẢI theo chuẩn “autoloading” PSR: [[PSR-0](https://www.php-fig.org/psr/psr-0/), [PSR-4](https://www.php-fig.org/psr/psr-4/)].
+- Namespace và lớp PHẢI theo chuẩn “autoloading” PSR: [[PSR-0](https://www.php-fig.org/psr/psr-0/), [PSR-4](https://www.php-fig.org/psr/psr-4/)].
 - Có nghĩa là mỗi lớp được khai báo trên mỗi file PHP riêng và namespace tối thiểu có một cấp, cấp đầu là tên vendor.
 - Tên lớp lại PHẢI đúng dạng StudlyCaps nha.
 - Code được viết cho PHP 5.3 trở về sau PHẢI sử dụng các namespace.
@@ -189,9 +190,9 @@ Cụ thể chi tiết hơn thì các bạn xem link sau nhé: [PSR-2 Coding Styl
 	    $replace = array();
 	    foreach ($context as $key => $val) {
 		// check that the value can be casted to string
-		if (!is_array($val) && (!is_object($val) || method_exists($val, '__toString'))) {
-			$replace['{' . $key . '}'] = $val;
-		}
+	        if (!is_array($val) && (!is_object($val) || method_exists($val, '__toString'))) {
+		    $replace['{' . $key . '}'] = $val;
+	        }
 	    }
 
 	    return strtr($message, $replace);
