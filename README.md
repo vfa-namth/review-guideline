@@ -99,7 +99,7 @@
 Thuật ngữ "Class" liên quan đến tất cả các lớp, interfaces và traits.
 #### 3.1.4.1. Constants
 - Hằng phải viết HOA toàn bộ và dùng dấu gạch ngang để ngăn cách nhé
-- Ví dụ bạn định đặt một hằng có ý nghĩa là: "Tôi không có tiền" thì như thế nào ?
+- Ví dụ bạn định đặt một hằng có ý nghĩa là: "Tôi đẹp trai" thì như thế nào ?
 	```
 	<?php
 	namespace Vendor\Model;
@@ -108,7 +108,7 @@ Thuật ngữ "Class" liên quan đến tất cả các lớp, interfaces và tr
 	{
 	    const VERSION = '1.0';
 	    const DATE_APPROVED = '2012-06-01';
-	    const TOI_KHONG_CO_TIEN = true;
+	    const TOI_DEP_TRAI = true;
 	}
 	```
 #### 3.1.4.2. Properties
