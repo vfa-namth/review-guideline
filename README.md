@@ -327,8 +327,8 @@ Thuật ngữ "Class" liên quan đến tất cả các lớp, interfaces và tr
 - [x] **Nên sử dụng toán tử gán kết hợp toán tử số học thay vì sử dụng toán tử toán học và toán tử gán riêng biệt.**
 - [x] **Khi khởi tạo đối tượng, nên sử dụng hàm khởi tạo thay vì toán tử gán.**
 - [x] **Khi sử dụng strlen() nên kiểm tra biến đó có tồn tại hay không trước(isset()).**
-- [x] **Không được sử dụng count() trong vòng lập.**
-- [x] **Áp dụng quy tắc DRY, có nghĩa là không lập lại code 2 lần.**
+- [x] **Không được sử dụng count() trong vòng lặp.**
+- [x] **Áp dụng quy tắc DRY, có nghĩa là không lặp lại code 2 lần.**
 
 
 ## Sắp xếp thứ tự các điều kiện trong câu lệnh "if".
@@ -344,7 +344,7 @@ Thuật ngữ "Class" liên quan đến tất cả các lớp, interfaces và tr
 		// làm gì bạn muốn
 	}
     ```
-   Tôi giải thích sơ qua nhé: Thời gian kiểm tra classA.getValue() === 5 luôn lớn hơn ```$b === 1```. Vì vậy các bạn đặt nó trước thì nếu classA.getValue() === false có phải "if" luôn false đúng không nào ? Vậy thời gian kiểm tra chỗ này có phải bằng với thời gian classA.getValue() thực thi kết không ? còn nếu các bạn đặt ```$b === 1``` thì lại khác nếu ```$b === 1``` là false thì "if" luôn false vậy thời gian thực thi ```$b === 1``` sẽ nhanh hơn ```classA.getValue() === 5``` đúng không nào ?
+   Tôi giải thích sơ qua nhé: Thời gian kiểm tra classA.getValue() === 5 luôn lớn hơn ```$b === 1```. Vì vậy các bạn đặt nó trước thì nếu classA.getValue() === false có phải "if" luôn false đúng không nào ? Vậy thời gian kiểm tra chỗ này có phải bằng với thời gian classA.getValue() thực thi không ? Còn nếu các bạn đặt ```$b === 1``` thì lại khác nếu ```$b === 1``` là false thì "if" luôn false vậy thời gian thực thi ```$b === 1``` sẽ nhanh hơn ```classA.getValue() === 5``` đúng không nào ?
 
 - Nếu xác suất nhận giá trị true/false của các điều kiện con bên trong là chênh lệch nhau thì
   - Với phép “AND”, ví dụ (A && B): Nên đặt điều kiện có xác suất nhận giá trị false nhiều hơn lên trước.
