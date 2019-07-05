@@ -320,6 +320,7 @@ Thuật ngữ "Class" liên quan đến tất cả các lớp, interfaces và tr
 
 - Bên dưới là những cái chúng ta nên tránh trong quá trình code, tôi chỉ giải thích ý nào khó hiểu thôi nhé.
 
+- [x] **Cố gắng tối ưu ngắn nhất nếu có thể**
 - [x] **Sắp xếp thứ tự các điều kiện trong câu lệnh "if".**
 - [x] **Nếu có thể hãy sử dụng "switch" thay vì một loạt các lệnh "if".**
 - [x] **Tối ưu phạm vi của biến.**
@@ -330,7 +331,19 @@ Thuật ngữ "Class" liên quan đến tất cả các lớp, interfaces và tr
 - [x] **Không được sử dụng count() trong vòng lặp.**
 - [x] **Áp dụng quy tắc DRY, có nghĩa là không lặp lại code 2 lần.**
 
-
+## Cố gắng tối ưu ngắn nhất nếu có thể.
+- Có nhiều trường hợp chúng ta cần phải tối ưu code rõ gàng, ngắn gọn và dễ hiểu.
+	Ví dụ:
+	```
+	if ( userController.removeUserInfo() && userController.saveUserInfo(info: info)) {
+				return true
+			}
+			return false
+	```
+	Chúng ta nên viết như thế này
+	```
+	return (userController.removeUserInfo() && userController.saveUserInfo(info: info))
+	```
 ## Sắp xếp thứ tự các điều kiện trong câu lệnh "if".
 - Nếu xác xuất nhận giá trị true/false của các điều kiện con bên trong là tương đương nhau thì nên đặt các điều kiện đơn giản, có thời gian xử lý nhanh lên trước, đặt các điều kiện phức tạp, có thời gian xử lý lâu hơn ở phía sau.
 	```
