@@ -335,14 +335,18 @@ Thuật ngữ "Class" liên quan đến tất cả các lớp, interfaces và tr
 - Có nhiều trường hợp chúng ta cần phải tối ưu code rõ gàng, ngắn gọn và dễ hiểu.
 	Ví dụ:
 	```
-	if ( userController.removeUserInfo() && userController.saveUserInfo(info: info)) {
-				return true
-			}
-			return false
+	public function saveUserInfo() {
+	    if ( userController.removeUserInfo() && userController.saveUserInfo(info: info)) {
+		return true
+	    }
+	    return false
+	}
 	```
 	Chúng ta nên viết như thế này
 	```
-	return (userController.removeUserInfo() && userController.saveUserInfo(info: info))
+	public function saveUserInfo() {
+	    return (userController.removeUserInfo() && userController.saveUserInfo(info: info));
+	}
 	```
 ## Sắp xếp thứ tự các điều kiện trong câu lệnh "if".
 - Nếu xác xuất nhận giá trị true/false của các điều kiện con bên trong là tương đương nhau thì nên đặt các điều kiện đơn giản, có thời gian xử lý nhanh lên trước, đặt các điều kiện phức tạp, có thời gian xử lý lâu hơn ở phía sau.
